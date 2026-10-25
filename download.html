@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetEasy - Download</title>
+    <style>
+        /* ================= GLOBAL & PREMIUM THEME ================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        body { 
+            background-color: #050505; 
+            color: #ffffff; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+            background-image: radial-gradient(circle at top, #1a1a1a 0%, #050505 60%);
+            overflow-x: hidden;
+        }
+
+        /* ================= TOP DOWNLOAD CARD ================= */
+        .glass-card { 
+            background: rgba(20, 20, 20, 0.8); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.15); 
+            padding: 40px 25px; 
+            border-radius: 24px; 
+            text-align: center; 
+            max-width: 380px; 
+            width: 100%; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            margin-bottom: 60px;
+            z-index: 2;
+        }
+
+        .logo-container {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px auto;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+        .logo-text { font-size: 45px; font-weight: bold; color: #000; }
+
+        h1 { font-size: 26px; font-weight: 700; color: #ffffff; margin-bottom: 8px; letter-spacing: 0.5px; }
+        p { font-size: 13px; color: #888888; margin-bottom: 30px; line-height: 1.5; }
+
+        .btn { 
+            display: block; width: 100%; background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%); 
+            color: #000000; padding: 16px; font-size: 16px; font-weight: 700; text-decoration: none; 
+            border-radius: 14px; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4); }
+
+        /* ================= REALISTIC APP INTERFACE (PURE CSS) ================= */
+        .interface-section {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .interface-section h2 {
+            font-size: 22px; color: #ffffff; margin-bottom: 40px; font-weight: 600; letter-spacing: 1px;
+        }
+
+        .screenshots-wrapper {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding-bottom: 30px;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .screenshots-wrapper::-webkit-scrollbar { display: none; }
+
+        /* Phone Frame Mockup */
+        .phone-frame {
+            flex: 0 0 auto;
+            width: 260px;
+            height: 540px;
+            background-color: #000;
+            border-radius: 40px;
+            border: 8px solid #222;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 0 0 2px #111;
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Notch */
+        .phone-notch {
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 100px; height: 25px;
+            background-color: #222;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 100;
+        }
+
+        .app-bg {
+            background-color: #0A0A0A;
+            width: 100%; height: 100%;
+            padding: 40px 15px 15px 15px;
+            display: flex; flex-direction: column;
+        }
+
+        /* --- Screen 1: Dashboard --- */
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .dash-title { font-size: 20px; font-weight: bold; color: #fff; }
+        .dash-status { font-size: 10px; color: #22C55E; background: rgba(34, 197, 94, 0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(34, 197, 94, 0.2); }
+        
+        .main-btn-container { display: flex; justify-content: center; margin: 30px 0; }
+        .main-btn {
+            width: 140px; height: 140px; border-radius: 50%;
+            background: radial-gradient(circle, #FFD700 0%, #B8860B 100%);
+            display: flex; justify-content: center; align-items: center; text-align: center;
+            font-size: 16px; font-weight: 900; color: #000; line-height: 1.2;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.5); } 70% { box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
+
+        .dash-cards { display: flex; flex-direction: column; gap: 10px; }
+        .dash-card { background: #141414; border-radius: 12px; padding: 15px; border: 1px solid #222; }
+        .dash-card-text { font-size: 12px; color: #888; margin-bottom: 5px; }
+        .dash-card-val { font-size: 14px; color: #FFD700; font-weight: bold; }
+
+        /* --- Screen 2: History --- */
+        .hist-header { font-size: 18px; font-weight: bold; color: #FFD700; text-align: center; margin-bottom: 20px; }
+        .hist-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .hist-tab { flex: 1; text-align: center; font-size: 11px; padding: 8px; border-radius: 20px; background: #141414; color: #888; font-weight: bold; }
+        .hist-tab.active { background: #FFD700; color: #000; }
+        
+        .hist-card { background: #141414; border-radius: 12px; padding: 15px; border: 1px solid #222; margin-bottom: 10px; }
+        .hist-card-top { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .hist-price { font-size: 18px; font-weight: bold; color: #fff; }
+        .hist-badge { font-size: 9px; font-weight: bold; background: #FFD700; color: #000; padding: 3px 8px; border-radius: 10px; }
+        .hist-loc { font-size: 10px; color: #888; margin-bottom: 4px; }
+
+        /* --- Screen 3: Settings --- */
+        .set-header { font-size: 18px; font-weight: bold; color: #fff; text-align: center; margin-bottom: 20px; }
+        .set-card { background: #141414; border-radius: 12px; padding: 15px; border: 1px solid #222; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .set-label { font-size: 12px; color: #fff; font-weight: bold; }
+        .set-val { font-size: 12px; color: #FFD700; font-weight: bold; }
+        .set-toggle { width: 30px; height: 16px; background: #FFD700; border-radius: 10px; position: relative; }
+        .set-toggle::after { content: ''; position: absolute; top: 2px; right: 2px; width: 12px; height: 12px; background: #000; border-radius: 50%; }
+        .set-btn { background: #FFD700; color: #000; text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; margin-top: auto; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Top Download Section -->
+    <div class="glass-card">
+        <div class="logo-container"><span class="logo-text">G</span></div>
+        <h1>GetEasy Premium</h1>
+        <p>India's #1 Auto-Accept App for Drivers.</p>
+        <a href="GetEasy.apk" download class="btn">Download APK</a>
+        <div style="margin-top: 20px; font-size: 11px; color: #555;">
+            Note: If Chrome shows an "Unsafe" warning,<br>please click <b>"Download Anyway"</b>.
+        </div>
+    </div>
+
+    <!-- App Interface Section -->
+    <div class="interface-section">
+        <h2>App Interface</h2>
+        
+        <div class="screenshots-wrapper">
+            
+            <!-- Phone 1: Dashboard -->
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="app-bg">
+                    <div class="dash-header">
+                        <div class="dash-title">GetEasy</div>
+                        <div class="dash-status">● System Online</div>
+                    </div>
+                    <div class="main-btn-container">
+                        <div class="main-btn">STOP<br>SERVICE</div>
+                    </div>
+                    <div class="dash-cards">
+                        <div class="dash-card">
+                            <div class="dash-card-text">Premium Active</div>
+                            <div class="dash-card-val">364 Days Left</div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="dash-card-text">Accepted Today</div>
+                            <div class="dash-card-val">12 Rides</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone 2: History -->
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="app-bg">
+                    <div class="hist-header">Order History</div>
+                    <div class="hist-tabs">
+                        <div class="hist-tab active">✓ Accepted</div>
+                        <div class="hist-tab">✗ Rejected</div>
+                    </div>
+                    <div class="hist-card">
+                        <div class="hist-card-top">
+                            <div class="hist-price">₹305</div>
+                            <div class="hist-badge">ACCEPTED</div>
+                        </div>
+                        <div class="hist-loc">📍 Pickup: 2.5 km</div>
+                        <div class="hist-loc">🏁 Drop: 8.0 km</div>
+                        <div style="font-size: 9px; color: #555; margin-top: 8px;">Today, 10:30 AM</div>
+                    </div>
+                    <div class="hist-card">
+                        <div class="hist-card-top">
+                            <div class="hist-price">₹150</div>
+                            <div class="hist-badge">ACCEPTED</div>
+                        </div>
+                        <div class="hist-loc">📍 Pickup: 1.0 km</div>
+                        <div class="hist-loc">🏁 Drop: 4.0 km</div>
+                        <div style="font-size: 9px; color: #555; margin-top: 8px;">Today, 09:15 AM</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone 3: Settings -->
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="app-bg">
+                    <div class="set-header">Settings</div>
+                    <div class="set-card">
+                        <div class="set-label">🎯 Target Apps</div>
+                        <div class="set-val">All Apps</div>
+                    </div>
+                    <div class="set-card">
+                        <div class="set-label">⚡ Click Speed</div>
+                        <div class="set-val">0.00 sec</div>
+                    </div>
+                    <div class="set-card">
+                        <div class="set-label">💰 Price Range</div>
+                        <div class="set-val">49 - 5000</div>
+                    </div>
+                    <div class="set-card" style="margin-top: 20px;">
+                        <div class="set-label">Base / Total</div>
+                        <div class="set-toggle"></div>
+                    </div>
+                    <div class="set-btn">SAVE SETTINGS</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
